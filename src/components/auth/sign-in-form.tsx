@@ -11,6 +11,14 @@ import { redirect, useRouter } from "next/navigation"
 
 export function SignInForm() {
   const router = useRouter()
+
+  const handleGoogleSignIn = async() => {
+      const data = await authClient.signIn.social({
+        provider: "google",
+      });
+      console.log('after google sign in', data)
+    };
+
   const handleEmailSignIp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
@@ -47,7 +55,7 @@ export function SignInForm() {
         </p>
       </div>
 
-      <Button variant="outline" size="lg" className="mt-6 w-full rounded-full">
+      <Button variant="outline" size="lg" className="mt-6 w-full cursor-pointer rounded-full" onClick={handleGoogleSignIn}>
         <GoogleIcon />
         Continue with Google
       </Button>

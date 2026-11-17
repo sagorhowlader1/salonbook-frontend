@@ -20,6 +20,13 @@ const passwordRules = [
 
 export function SignUpForm() {
 
+  const handleGoogleSignUp = async() => {
+    const data = await authClient.signIn.social({
+      provider: "google",
+    });
+    console.log('after google sign in', data)
+  };
+
   const handleEmailSignUp = async (e: React.SubmitEvent<HTMLElement>) => {
     e.preventDefault()
 
@@ -73,7 +80,7 @@ export function SignUpForm() {
         </p>
       </div>
 
-      <Button variant="outline" size="lg" className="mt-6 w-full rounded-full">
+      <Button variant="outline" size="lg" className="mt-6 w-full cursor-pointer rounded-full" onClick={handleGoogleSignUp}>
         <GoogleIcon />
         Continue with Google
       </Button>

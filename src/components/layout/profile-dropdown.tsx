@@ -33,7 +33,7 @@ export function ProfileDropdown() {
           <Button
             variant="outline"
             size="sm"
-            className="rounded-full gap-2 pl-1"
+            className="rounded-full gap-2 pl-1 cursor-pointer"
             aria-label="Open profile menu"
           />
         }
@@ -53,12 +53,13 @@ export function ProfileDropdown() {
           </p>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuLinkItem render={<Link href="/dashboard" />}>
+        <DropdownMenuLinkItem render={<Link href="/dashboard" />} className="cursor-pointer">
           <LayoutDashboard />
           Dashboard
         </DropdownMenuLinkItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
+          className="cursor-pointer"
           onClick={() => {
             signOut()
             // Auth context updates synchronously, so the navbar swaps to the
