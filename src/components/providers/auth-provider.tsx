@@ -10,7 +10,7 @@ import {
 
 import { authClient } from "@/lib/auth-client"
 
-export type UserRole = "customer" | "salon_owner"
+export type UserRole = "customer" | "admin"
 
 export interface AuthUser {
   id: string

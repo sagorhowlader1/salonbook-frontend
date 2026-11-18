@@ -14,6 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { redirect } from "next/navigation"
 
 export function ProfileDropdown() {
   const { user, signOut } = useAuth()
@@ -49,7 +50,8 @@ export function ProfileDropdown() {
         <DropdownMenuLabel className="px-2 py-1.5">
           <p className="text-sm font-medium text-foreground">{user.name}</p>
           <p className="text-xs text-muted-foreground">
-            {user.role === "salon_owner" ? "Salon owner" : "Customer"}
+            {/* {user.role === "salon_owner" ? "Salon owner" : "Customer"} */}
+            {user.role === "admin" ? "Admin" : "Customer"}
           </p>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
@@ -69,6 +71,7 @@ export function ProfileDropdown() {
               description: "You have been signed out successfully.",
               type: "success",
             })
+           
           }}
         >
           <LogOut />

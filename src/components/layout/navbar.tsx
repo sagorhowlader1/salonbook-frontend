@@ -23,7 +23,7 @@ const publicLinks = [
 const authedLinks = [
   { href: "/", label: "Home" },
   { href: "/salon", label: "Salon Details" },
-  { href: "/dashboard", label: "Dashboard" },
+  // { href: "/dashboard", label: "Dashboard" },
 ] as const
 
 function NavLink({ href, label }: { href: string; label: string }) {
@@ -115,7 +115,7 @@ export function Navbar() {
                 size="sm"
                 nativeButton={false}
                 render={<Link href="/signup" />}
-                className="rounded-full bg-linear-to-r from-fuchsia-600 to-violet-600 text-white hover:opacity-90"
+                className="rounded-full bg-linear-to-r from-gold-light to-gold font-semibold text-black hover:brightness-105"
               >
                 Sign Up
               </Button>

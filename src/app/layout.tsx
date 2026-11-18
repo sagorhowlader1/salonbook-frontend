@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import { ThemeProvider, THEME_STORAGE_KEY } from "@/components/providers/theme-provider";
 import { AuthProvider } from "@/components/providers/auth-provider";
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
 import { Toaster } from "@/components/ui/toast";
 import "./globals.css";
 
@@ -16,6 +14,7 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
 
 export const metadata: Metadata = {
   title: "SalonBook",
@@ -36,10 +35,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <ThemeProvider>
           <AuthProvider>
-            <Navbar />
             <main className="flex-1">{children}</main>
             <Toaster />
-            <Footer />
           </AuthProvider>
         </ThemeProvider>
       </body>

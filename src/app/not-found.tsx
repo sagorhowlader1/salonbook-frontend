@@ -12,7 +12,7 @@ export default function NotFound() {
 
       <div>
         <Badge variant="outline">Error 404</Badge>
-        <h1 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+        <h1 className="mt-3 font-heading text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
           Page not found
         </h1>
         <p className="mx-auto mt-3 max-w-md text-muted-foreground">
@@ -26,7 +26,7 @@ export default function NotFound() {
           size="lg"
           nativeButton={false}
           render={<Link href="/" />}
-          className="rounded-full bg-linear-to-r from-fuchsia-600 to-violet-600 text-white hover:opacity-90"
+          className="rounded-full bg-linear-to-r from-gold-light to-gold font-semibold text-black shadow-lg shadow-gold/20 hover:brightness-105"
         >
           Back to Home
         </Button>
