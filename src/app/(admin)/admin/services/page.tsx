@@ -37,6 +37,7 @@ export default function ManageServicesPage() {
         description="Create, update and remove the services your salon offers."
         action={
           <Button
+            nativeButton={false}
             render={<Link href="/admin/services/new" />}
             className="rounded-full bg-linear-to-r from-gold-light to-gold font-semibold text-black hover:brightness-105"
           >
@@ -105,9 +106,9 @@ export default function ManageServicesPage() {
 
                   <div className="flex items-center gap-1.5">
                     <Button
+                      nativeButton={false}
                       variant="outline"
                       size="icon-sm"
-                      nativeButton={false}
                       aria-label={`Edit ${service.name}`}
                       render={<Link href={`/admin/services/${service.id}`} />}
                       className="rounded-full"
@@ -117,7 +118,6 @@ export default function ManageServicesPage() {
                     <Button
                       variant="ghost"
                       size="icon-sm"
-                      nativeButton={false}
                       aria-label={`Delete ${service.name}`}
                       onClick={() => handleDelete(service)}
                       className="rounded-full text-muted-foreground hover:bg-destructive/10 hover:text-destructive"

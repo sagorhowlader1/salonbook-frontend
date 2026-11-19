@@ -227,18 +227,13 @@ const DashboardSidebar = ({
 
     const {data: session} = useSession();
     const sessionRole = session?.user?.role;
-    console.log("Session", session)
-    console.log("User Role", session?.user?.role)
+
+
     // const activeRole: SidebarRole =  "customer"
     const activeRole: SidebarRole =  sessionRole === "admin" ? "admin" : "customer"
     const groups = navByRole[activeRole]
 
    
-
-    // console.log(groups, 'groups')
-
-   
-
     const initials = user
         ? user.name
             .split(" ")

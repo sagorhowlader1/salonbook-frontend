@@ -137,11 +137,34 @@ export function ServiceForm({ mode = "add", service }: ServiceFormProps) {
     return next
   }
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     const nextErrors = validate()
     setErrors(nextErrors)
+
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}service`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        category,
+        description,
+        imageFile,
+        price: Number(price),
+        duration: Number(duration),
+        status,
+      }),
+    })
+
+    const result = await res.json();
+    console.log(result, 'service')
+
+
+
 
     if (Object.keys(nextErrors).length > 0) {
       toast.add({
@@ -365,7 +388,6 @@ export function ServiceForm({ mode = "add", service }: ServiceFormProps) {
                     <Button
                       type="button"
                       variant="outline"
-                      nativeButton={false}
                       size="sm"
                       className="rounded-full"
                       onClick={() => fileInputRef.current?.click()}
@@ -374,7 +396,6 @@ export function ServiceForm({ mode = "add", service }: ServiceFormProps) {
                     </Button>
                     <Button
                       type="button"
-                      nativeButton={false}
                       variant="ghost"
                       size="sm"
                       className="rounded-full"
@@ -405,7 +426,6 @@ export function ServiceForm({ mode = "add", service }: ServiceFormProps) {
                   <Button
                     type="button"
                     variant="outline"
-                    nativeButton={false}
                     size="sm"
                     className="rounded-full"
                     onClick={() => fileInputRef.current?.click()}
@@ -455,7 +475,6 @@ export function ServiceForm({ mode = "add", service }: ServiceFormProps) {
         <CardFooter className="flex flex-col-reverse gap-2 border-t border-border pt-6 pb-6 sm:flex-row sm:justify-end">
           <Button
             type="button"
-            nativeButton={false}
             variant="outline"
             className="rounded-full px-5"
             onClick={() => router.push("/admin/services")}
@@ -464,7 +483,6 @@ export function ServiceForm({ mode = "add", service }: ServiceFormProps) {
           </Button>
           <Button
             type="submit"
-            nativeButton={false}
             className="rounded-full bg-linear-to-r from-gold-light to-gold px-6 font-semibold text-black hover:brightness-105"
           >
             {mode === "add" ? "Add Service" : "Save Changes"}
