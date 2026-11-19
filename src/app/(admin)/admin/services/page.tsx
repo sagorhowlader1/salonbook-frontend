@@ -1,10 +1,13 @@
+
+
 "use client"
 
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Clock, DollarSign, Pencil, Plus, Trash2 } from "lucide-react"
 import { cn } from "cn"
+
 
 import { PageHeader } from "@/components/dashboard/shared/PageHeader"
 import { StateBlock } from "@/components/shared/state-block"
@@ -13,20 +16,111 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { toast } from "@/components/ui/toast"
-import { seedServices, type Service } from "@/lib/services-data"
+import type { Service } from "@/lib/services-data"
+
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}service`
+
+type BackendService = Omit<Service, "id"> & {
+  _id: string
+}
 
 export default function ManageServicesPage() {
-  const [services, setServices] = useState<Service[]>(seedServices)
+  const [services, setServices] = useState<Service[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
-  const handleDelete = (service: Service) => {
-    setServices((current) =>
-      current.filter((item) => item.id !== service.id)
-    )
-    toast.add({
-      title: "Service deleted",
-      description: `"${service.name}" has been removed from your catalogue.`,
-      type: "success",
-    })
+  // Fetch all services from backend
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        setLoading(true)
+        setError(null)
+
+        const response = await fetch(API_URL)
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch services")
+        }
+
+        const data: BackendService[] = await response.json()
+
+        const formattedServices: Service[] = data.map((service) => ({
+          ...service,
+          id: service._id,
+        }))
+
+        setServices(formattedServices)
+      } catch (error) {
+        // console.error("Fetch services error:", error)
+        setError("Unable to load services. Please try again.")
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchServices()
+  }, [])
+
+  // Delete service (local state only for now)
+
+  const [deletingId, setDeletingId] = useState<string | null>(null)
+  const handleDelete = async (service: Service) => {
+
+    const toastId = toast.add({
+    title: "Delete Service?",
+    description: `Are you sure you want to delete "${service.name}"? This action cannot be undone.`,
+    type: "warning",
+    timeout: 0,
+
+    actionProps: {
+      children: "Delete",
+      onClick: () => {
+        toast.close(toastId)
+        void deleteService(service)
+      },
+    },
+  })
+
+    const deleteService = async (service: Service) => {
+      try {
+        setDeletingId(service.id)
+
+        const response = await fetch(`${API_URL}/${service.id}`, {
+          method: "DELETE",
+        })
+
+        const result = await response.json()
+
+        if (!response.ok) {
+          throw new Error(result.message || "Failed to delete service")
+        }
+
+        setServices((current) =>
+          current.filter((item) => item.id !== service.id)
+        )
+
+        toast.add({
+          title: "Service deleted",
+          description: `"${service.name}" has been deleted successfully.`,
+          type: "success",
+        })
+      } catch (error) {
+        toast.add({
+          title: "Delete failed",
+          description: "Unable to delete this service. Please try again.",
+          type: "error",
+        })
+      } finally {
+        setDeletingId(null)
+      }
+    }
+
+  }
+
+  const getImageUrl = (image: string) => {
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "")
+
+    return `${baseUrl}${image}`
   }
 
   return (
@@ -48,7 +142,23 @@ export default function ManageServicesPage() {
       />
 
       <div className="mt-8">
-        {services.length === 0 ? (
+        {loading ? (
+          <p className="py-10 text-center text-sm text-muted-foreground">
+            Loading services...
+          </p>
+        ) : error ? (
+          <div className="py-10 text-center">
+            <p className="text-sm text-destructive">{error}</p>
+
+            <Button
+              variant="outline"
+              className="mt-4"
+              onClick={() => window.location.reload()}
+            >
+              Try Again
+            </Button>
+          </div>
+        ) : services.length === 0 ? (
           <StateBlock
             state="empty"
             title="No services yet"
@@ -64,19 +174,27 @@ export default function ManageServicesPage() {
                   index > 0 && "border-t border-border"
                 )}
               >
-                <Image
-                  src={service.image}
-                  alt={service.name}
-                  width={72}
-                  height={72}
-                  className="size-16 shrink-0 rounded-xl border border-border object-cover sm:size-[4.5rem]"
-                />
+                {service.image ? (
+                  <Image
+                    src={getImageUrl(service.image)}
+                    alt={service.name}
+                    width={72}
+                    height={72}
+                    unoptimized
+                    className="size-16 shrink-0 rounded-xl border border-border object-cover sm:size-[4.5rem]"
+                  />
+                ) : (
+                  <div className="flex size-16 shrink-0 items-center justify-center rounded-xl border border-border bg-muted text-xs text-muted-foreground">
+                    No Image
+                  </div>
+                )}
 
                 <div className="min-w-0 flex-1 space-y-1.5">
                   <div className="flex flex-wrap items-center gap-2">
                     <h2 className="font-heading text-base font-semibold text-foreground">
                       {service.name}
                     </h2>
+
                     <Badge
                       variant="outline"
                       className="border-gold/30 bg-gold/10 text-gold"
@@ -92,8 +210,9 @@ export default function ManageServicesPage() {
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-medium text-muted-foreground">
                     <span className="flex items-center gap-1.5">
                       <DollarSign className="size-3.5 text-gold" />
-                      {service.price.toFixed(2)}
+                      {Number(service.price).toFixed(2)}
                     </span>
+
                     <span className="flex items-center gap-1.5">
                       <Clock className="size-3.5 text-gold" />
                       {service.duration} min
@@ -110,12 +229,30 @@ export default function ManageServicesPage() {
                       variant="outline"
                       size="icon-sm"
                       aria-label={`Edit ${service.name}`}
-                      render={<Link href={`/admin/services/${service.id}`} />}
+                      render={
+                        <Link href={`/admin/services/${service.id}`} />
+                      }
                       className="rounded-full"
                     >
                       <Pencil />
                     </Button>
+
                     <Button
+                      variant="ghost"
+                      size="icon-sm"
+                      aria-label={`Delete ${service.name}`}
+                      disabled={deletingId === service.id}
+                      onClick={() => handleDelete(service)}
+                      className="rounded-full text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+                    >
+                      {deletingId === service.id ? (
+                        <span className="text-xs">...</span>
+                      ) : (
+                        <Trash2 />
+                      )}
+                    </Button>
+
+                    {/* <Button
                       variant="ghost"
                       size="icon-sm"
                       aria-label={`Delete ${service.name}`}
@@ -123,7 +260,7 @@ export default function ManageServicesPage() {
                       className="rounded-full text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
                     >
                       <Trash2 />
-                    </Button>
+                    </Button> */}
                   </div>
                 </div>
               </div>

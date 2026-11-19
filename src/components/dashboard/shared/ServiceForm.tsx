@@ -113,6 +113,8 @@ export function ServiceForm({ mode = "add", service }: ServiceFormProps) {
     setPreviewUrl(service?.image ?? null)
     clearError("image")
     if (fileInputRef.current) fileInputRef.current.value = ""
+
+
   }
 
   const validate = (): ErrorMap => {
@@ -137,55 +139,137 @@ export function ServiceForm({ mode = "add", service }: ServiceFormProps) {
     return next
   }
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
 
-    const nextErrors = validate()
+const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  event.preventDefault()
+
+  const nextErrors = validate()
+  setErrors(nextErrors)
+
+  if (Object.keys(nextErrors).length > 0) {
     setErrors(nextErrors)
+    return
+  }
 
+  try {
+    const formData = new FormData()
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}service`, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        name,
-        category,
-        description,
-        imageFile,
-        price: Number(price),
-        duration: Number(duration),
-        status,
-      }),
+    formData.append("name", name.trim())
+    formData.append("category", category)
+    formData.append("description", description.trim())
+    formData.append("price", price)
+    formData.append("duration", duration)
+    formData.append("status", status)
+
+    if (imageFile) {
+      formData.append("imageFile", imageFile)
+    }
+
+    const API_URL = `${process.env.NEXT_PUBLIC_API_URL}service`
+
+    const url =
+      mode === "update"
+        ? `${API_URL}/${service?.id}`
+        : API_URL
+
+    const response = await fetch(url, {
+      method: mode === "update" ? "PUT" : "POST",
+      body: formData,
     })
 
-    const result = await res.json();
-    console.log(result, 'service')
+    const result = await response.json()
 
-
-
-
-    if (Object.keys(nextErrors).length > 0) {
-      toast.add({
-        title: "Check the form",
-        description: "Please fix the highlighted fields and try again.",
-        type: "error",
-      })
-      return
+    if (!response.ok) {
+      throw new Error(result.message || "Failed to save service")
     }
 
     toast.add({
       title: mode === "add" ? "Service created" : "Service updated",
-      description:
-        mode === "add"
-          ? `"${name.trim()}" has been added to your catalogue.`
-          : `"${name.trim()}" has been saved.`,
+      description: `"${name.trim()}" has been saved successfully.`,
       type: "success",
     })
 
     router.push("/admin/services")
+    router.refresh()
+  } catch (error) {
+
+    toast.add({
+      title: "Save failed",
+      description: "Unable to save service. Please try again.",
+      type: "error",
+    })
   }
+}
+
+
+  // const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault()
+
+  //   const nextErrors = validate()
+  //   setErrors(nextErrors)
+
+
+
+  //   const formData = new FormData()
+
+  //   formData.append("name", name)
+  //   formData.append("category", category)
+  //   formData.append("description", description)
+  //   formData.append("price", price)
+  //   formData.append("duration", duration)
+  //   formData.append("status", status)
+
+  //   if (imageFile) {
+  //     formData.append("imageFile", imageFile)
+  //   }
+
+  //   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}service`, {
+  //     method: "POST",
+  //     body: formData,
+  //   })
+
+  //   // const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}service`, {
+  //   //   method: "POST",
+  //   //   headers: {
+  //   //     "Content-type": "application/json",
+  //   //   },
+  //   //   body: JSON.stringify({
+  //   //     name,
+  //   //     category,
+  //   //     description,
+  //   //     imageFile,
+  //   //     price: Number(price),
+  //   //     duration: Number(duration),
+  //   //     status,
+  //   //   }),
+  //   // })
+
+  //   // const result = await res.json();
+  //   // console.log(result, 'service')
+
+
+
+
+  //   if (Object.keys(nextErrors).length > 0) {
+  //     toast.add({
+  //       title: "Check the form",
+  //       description: "Please fix the highlighted fields and try again.",
+  //       type: "error",
+  //     })
+  //     return
+  //   }
+
+  //   toast.add({
+  //     title: mode === "add" ? "Service created" : "Service updated",
+  //     description:
+  //       mode === "add"
+  //         ? `"${name.trim()}" has been added to your catalogue.`
+  //         : `"${name.trim()}" has been saved.`,
+  //     type: "success",
+  //   })
+
+  //   router.push("/admin/services")
+  // }
 
   return (
     <Card className="gap-0 overflow-hidden py-0">
