@@ -1,7 +1,7 @@
 import ManageUsersPage from '@/components/dashboard/shared/ManageUsers';
 
-
-const page = () => {
+export const instant = false;
+const ManageUser = () => {
     return (
         <div>
             <ManageUsersPage />
@@ -9,4 +9,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default ManageUser;
