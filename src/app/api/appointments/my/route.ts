@@ -19,7 +19,7 @@ export async function GET() {
 
     // 2. Backend configuration
     const backendUrl =
-      process.env.BACKEND_API_URL || "http://localhost:5000";
+      process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
     const secret = process.env.INTERNAL_API_SECRET;
 
