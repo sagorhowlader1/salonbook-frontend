@@ -342,7 +342,7 @@ export default function MyAppointmentsPage() {
               <p>
                 <strong>Date:</strong>{" "}
                 {new Date(
-                  selectedAppointment.date
+                  selectedAppointment.appointmentDate
                 ).toLocaleDateString()}
               </p>
               <p>
