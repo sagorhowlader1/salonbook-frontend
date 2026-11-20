@@ -22,7 +22,7 @@ const publicLinks = [
 
 const authedLinks = [
   { href: "/", label: "Home" },
-  { href: "/salon", label: "Salon Details" },
+  { href: "/services", label: "Services Details" },
   // { href: "/dashboard", label: "Dashboard" },
 ] as const
 

@@ -218,7 +218,7 @@ export default function ManageUsersPage() {
         <button
           onClick={fetchUsers}
           disabled={loading}
-          className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium transition hover:bg-gray-50 disabled:opacity-50 dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10"
+          className="inline-flex items-center cursor-pointer justify-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium transition hover:bg-gray-50 disabled:opacity-50 dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10"
         >
           <RefreshCw
             size={16}
@@ -381,7 +381,7 @@ export default function ManageUsersPage() {
                 <button
                   onClick={() => handleUnblock(user)}
                   disabled={processingId === user.id}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-green-600 px-3 py-2.5 text-xs font-semibold text-white transition hover:bg-green-700 disabled:opacity-50"
+                  className="flex w-full items-center justify-center cursor-pointer gap-2 rounded-lg bg-green-600 px-3 py-2.5 text-xs font-semibold text-white transition hover:bg-green-700 disabled:opacity-50"
                 >
                   {processingId === user.id ? (
                     <Loader2 size={15} className="animate-spin" />
@@ -469,7 +469,7 @@ export default function ManageUsersPage() {
                     <button
                       onClick={() => setSelectedUser(user)}
                       title="View Details"
-                      className="rounded-lg border border-gray-200 p-2 text-gray-500 hover:text-[#b18b3c] dark:border-white/10"
+                      className="rounded-lg border cursor-pointer border-gray-200 p-2 text-gray-500 hover:text-[#b18b3c] dark:border-white/10"
                     >
                       <Eye size={16} />
                     </button>
@@ -478,7 +478,7 @@ export default function ManageUsersPage() {
                       <button
                         onClick={() => handleUnblock(user)}
                         disabled={processingId === user.id}
-                        className="rounded-lg bg-green-600 px-3 py-2 text-xs font-medium text-white hover:bg-green-700 disabled:opacity-50"
+                        className="rounded-lg bg-green-600 px-3 py-2 text-xs cursor-pointer font-medium text-white hover:bg-green-700 disabled:opacity-50"
                       >
                         {processingId === user.id ? "Loading..." : "Unblock"}
                       </button>
@@ -486,7 +486,7 @@ export default function ManageUsersPage() {
                       <button
                         onClick={() => handleBlock(user)}
                         disabled={processingId === user.id}
-                        className="rounded-lg bg-red-600 px-3 py-2 text-xs font-medium text-white hover:bg-red-700 disabled:opacity-50"
+                        className="rounded-lg bg-red-600 px-3 py-2 cursor-pointer text-xs font-medium text-white hover:bg-red-700 disabled:opacity-50"
                       >
                         {processingId === user.id ? "Loading..." : "Block"}
                       </button>
@@ -527,7 +527,7 @@ export default function ManageUsersPage() {
               </h2>
               <button
                 onClick={() => setSelectedUser(null)}
-                className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-white/10"
+                className="rounded-lg p-2 text-gray-500 cursor-pointer hover:bg-gray-100 dark:hover:bg-white/10"
               >
                 <X size={19} />
               </button>
@@ -601,7 +601,7 @@ export default function ManageUsersPage() {
                 <button
                   onClick={() => handleUnblock(selectedUser)}
                   disabled={processingId === selectedUser.id}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-green-600 py-3 text-sm font-semibold text-white transition hover:bg-green-700 disabled:opacity-50"
+                  className="flex w-full items-center justify-center cursor-pointer gap-2 rounded-lg bg-green-600 py-3 text-sm font-semibold text-white transition hover:bg-green-700 disabled:opacity-50"
                 >
                   <CheckCircle size={17} />
                   Unblock Customer
@@ -610,7 +610,7 @@ export default function ManageUsersPage() {
                 <button
                   onClick={() => handleBlock(selectedUser)}
                   disabled={processingId === selectedUser.id}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-red-600 py-3 text-sm font-semibold text-white transition hover:bg-red-700 disabled:opacity-50"
+                  className="flex w-full items-center cursor-pointer justify-center gap-2 rounded-lg bg-red-600 py-3 text-sm font-semibold text-white transition hover:bg-red-700 disabled:opacity-50"
                 >
                   <Ban size={17} />
                   Block Customer
@@ -659,67 +659,3 @@ function StatCard({
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-// "use client";
-
-
-// import { useEffect, useState } from "react";
-// import { authClient } from "@/lib/auth-client";
-
-// export default function ManageUsersPage() {
-//   const [users, setUsers] = useState<any[]>([]);
-//   const [loading, setLoading] = useState(true);
-
-  
-//   useEffect(() => {
-//     const fetchUsers = async () => {
-//       try {
-//         const result = await authClient.admin.listUsers({
-//           query: {
-//             limit: 100,
-//             filterField: "role",
-//             filterValue: "customer",
-//             filterOperator: "eq",
-//           },
-//         });
-
-//         if (result.data) {
-//           setUsers(result.data.users);
-//         }
-//       } catch (error) {
-//         console.error("Failed to fetch users:", error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchUsers();
-//   }, []);
-
-//   if (loading) {
-//     return <p>Loading users...</p>;
-//   }
-
-//   return (
-//     <div>
-//       <h1>Manage Users</h1>
-
-//       {users.map((user) => (
-//         <div key={user.id}>
-//           <p>{user.name}</p>
-//           <p>{user.email}</p>
-//         </div>
-//       ))}
-//     </div>
-//   );
-// }
