@@ -1,4 +1,5 @@
 import type { ReactNode } from "react"
+import { Suspense } from "react"
 
 import { AdminGate } from "@/components/dashboard/shared/AdminGate"
 import DashboardSidebar from "@/components/dashboard/shared/DashboardSidebar"
@@ -11,7 +12,10 @@ export default function AdminLayout({
 }) {
   return (
     <div className="flex min-h-screen">
-      <DashboardSidebar role="admin" />
+      <Suspense fallback={<div className="w-64 shrink-0" />}>
+        <DashboardSidebar role="admin" />
+      </Suspense>
+
       <div className="flex min-w-0 flex-1 flex-col">
         <AdminGate>{children}</AdminGate>
       </div>

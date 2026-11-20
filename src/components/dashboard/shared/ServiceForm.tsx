@@ -201,76 +201,6 @@ const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
   }
 }
 
-
-  // const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault()
-
-  //   const nextErrors = validate()
-  //   setErrors(nextErrors)
-
-
-
-  //   const formData = new FormData()
-
-  //   formData.append("name", name)
-  //   formData.append("category", category)
-  //   formData.append("description", description)
-  //   formData.append("price", price)
-  //   formData.append("duration", duration)
-  //   formData.append("status", status)
-
-  //   if (imageFile) {
-  //     formData.append("imageFile", imageFile)
-  //   }
-
-  //   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}service`, {
-  //     method: "POST",
-  //     body: formData,
-  //   })
-
-  //   // const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}service`, {
-  //   //   method: "POST",
-  //   //   headers: {
-  //   //     "Content-type": "application/json",
-  //   //   },
-  //   //   body: JSON.stringify({
-  //   //     name,
-  //   //     category,
-  //   //     description,
-  //   //     imageFile,
-  //   //     price: Number(price),
-  //   //     duration: Number(duration),
-  //   //     status,
-  //   //   }),
-  //   // })
-
-  //   // const result = await res.json();
-  //   // console.log(result, 'service')
-
-
-
-
-  //   if (Object.keys(nextErrors).length > 0) {
-  //     toast.add({
-  //       title: "Check the form",
-  //       description: "Please fix the highlighted fields and try again.",
-  //       type: "error",
-  //     })
-  //     return
-  //   }
-
-  //   toast.add({
-  //     title: mode === "add" ? "Service created" : "Service updated",
-  //     description:
-  //       mode === "add"
-  //         ? `"${name.trim()}" has been added to your catalogue.`
-  //         : `"${name.trim()}" has been saved.`,
-  //     type: "success",
-  //   })
-
-  //   router.push("/admin/services")
-  // }
-
   return (
     <Card className="gap-0 overflow-hidden py-0">
       <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-6">
@@ -317,7 +247,7 @@ const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
                   id="service-category"
                   aria-invalid={Boolean(errors.category)}
                   className={cn(
-                    "h-9 w-full",
+                    "h-9 w-full cursor-pointer",
                     errors.category && "border-destructive"
                   )}
                 >
@@ -455,7 +385,7 @@ const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
                 type="file"
                 accept="image/png,image/jpeg,image/webp"
                 aria-label="Upload service image"
-                className="sr-only"
+                className="sr-only cursor-pointer"
                 onChange={(event) => handleFile(event.target.files?.[0])}
               />
 
@@ -473,7 +403,7 @@ const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
                       type="button"
                       variant="outline"
                       size="sm"
-                      className="rounded-full"
+                      className="rounded-full cursor-pointer"
                       onClick={() => fileInputRef.current?.click()}
                     >
                       Replace image
@@ -482,7 +412,7 @@ const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
                       type="button"
                       variant="ghost"
                       size="sm"
-                      className="rounded-full"
+                      className="rounded-full cursor-pointer"
                       onClick={handleRemoveImage}
                     >
                       Remove
@@ -511,7 +441,7 @@ const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
                     type="button"
                     variant="outline"
                     size="sm"
-                    className="rounded-full"
+                    className="rounded-full cursor-pointer"
                     onClick={() => fileInputRef.current?.click()}
                   >
                     Browse files
@@ -560,14 +490,14 @@ const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
           <Button
             type="button"
             variant="outline"
-            className="rounded-full px-5"
+            className="rounded-full cursor-pointer px-5"
             onClick={() => router.push("/admin/services")}
           >
             Cancel
           </Button>
           <Button
             type="submit"
-            className="rounded-full bg-linear-to-r from-gold-light to-gold px-6 font-semibold text-black hover:brightness-105"
+            className="rounded-full cursor-pointer bg-linear-to-r from-gold-light to-gold px-6 font-semibold text-black hover:brightness-105"
           >
             {mode === "add" ? "Add Service" : "Save Changes"}
           </Button>

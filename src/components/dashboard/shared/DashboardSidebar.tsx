@@ -152,7 +152,7 @@ const DashboardSidebar = ({
     defaultCollapsed = false,
     onCollapsedChange,
     open: openProp,
-    defaultOpen = false,
+    defaultOpen = true,
     onOpenChange,
     className,
 }: DashboardSidebarProps) => {
