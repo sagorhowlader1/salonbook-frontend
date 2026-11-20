@@ -3,7 +3,7 @@ import { Suspense } from "react"
 
 import { AdminGate } from "@/components/dashboard/shared/AdminGate"
 import DashboardSidebar from "@/components/dashboard/shared/DashboardSidebar"
-
+export const instant = false
 /** Admin area shell: sidebar navigation + admin-only content gate. */
 export default function AdminLayout({
   children,

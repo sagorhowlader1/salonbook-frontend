@@ -41,6 +41,7 @@ interface ServiceFormProps {
 
 type ErrorMap = Partial<Record<"name" | "category" | "description" | "price" | "duration" | "image", string>>
 
+
 function FieldError({ children }: { children: React.ReactNode }) {
   return (
     <p role="alert" className="text-xs font-medium text-destructive">
@@ -140,16 +141,14 @@ export function ServiceForm({ mode = "add", service }: ServiceFormProps) {
   }
 
 
+
 const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
   event.preventDefault()
 
   const nextErrors = validate()
   setErrors(nextErrors)
 
-  if (Object.keys(nextErrors).length > 0) {
-    setErrors(nextErrors)
-    return
-  }
+  if (Object.keys(nextErrors).length > 0) return
 
   try {
     const formData = new FormData()
@@ -165,7 +164,7 @@ const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
       formData.append("imageFile", imageFile)
     }
 
-    const API_URL = `${process.env.NEXT_PUBLIC_API_URL}service`
+    const API_URL = `${process.env.NEXT_PUBLIC_API_URL?.replace(/\/+$/, "")}/service`
 
     const url =
       mode === "update"
@@ -191,15 +190,21 @@ const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 
     router.push("/admin/services")
     router.refresh()
+
   } catch (error) {
+    console.error("Save service error:", error)
 
     toast.add({
       title: "Save failed",
-      description: "Unable to save service. Please try again.",
+      description:
+        error instanceof Error
+          ? error.message
+          : "Unable to save service. Please try again.",
       type: "error",
     })
   }
 }
+
 
   return (
     <Card className="gap-0 overflow-hidden py-0">

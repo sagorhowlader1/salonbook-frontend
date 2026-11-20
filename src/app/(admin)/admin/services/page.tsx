@@ -18,7 +18,10 @@ import { Card } from "@/components/ui/card"
 import { toast } from "@/components/ui/toast"
 import type { Service } from "@/lib/services-data"
 
-const API_URL = `${process.env.NEXT_PUBLIC_API_URL}service`
+// const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/service/`
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL?.replace(/\/+$/, "");
+
+const API_URL = `${API_BASE_URL}/service`;
 
 type BackendService = Omit<Service, "id"> & {
   _id: string
@@ -118,6 +121,8 @@ export default function ManageServicesPage() {
   }
 
   const getImageUrl = (image: string) => {
+    if (/^https?:\/\//.test(image)) return image
+
     const baseUrl = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "")
 
     return `${baseUrl}${image}`
