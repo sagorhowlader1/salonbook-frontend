@@ -177,7 +177,7 @@ export default function AppointmentBookingForm({
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-full bg-primary px-6 py-3 font-semibold text-primary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+          className="w-full rounded-full bg-primary cursor-pointer px-6 py-3 font-semibold text-primary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {loading ? "Booking..." : "Book Appointment"}
         </button>

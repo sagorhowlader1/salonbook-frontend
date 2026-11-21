@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider, THEME_STORAGE_KEY } from "@/components/providers/theme-provider";
 import { AuthProvider } from "@/components/providers/auth-provider";
 import { Toaster } from "@/components/ui/toast";
+import Script from "next/script";
 import "./globals.css";
 export const instant = false
 const geistSans = Geist({
@@ -32,7 +33,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        {/* <Script
+          id="theme-init"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: themeInitScript }}
+        /> */}
         <ThemeProvider>
           <AuthProvider>
             <main className="flex-1">{children}</main>

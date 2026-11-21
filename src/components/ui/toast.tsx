@@ -179,7 +179,6 @@ function ToastIcon({ type }: { type: string | undefined }) {
   )
 }
 
-
 function ToastList() {
   const { toasts } = ToastPrimitive.useToastManager()
 
@@ -187,46 +186,16 @@ function ToastList() {
     <Toast key={toastItem.id} toast={toastItem}>
       <ToastContent>
         <ToastIcon type={toastItem.type} />
-
         <div className="flex min-w-0 flex-1 flex-col gap-1">
           <ToastTitle />
           <ToastDescription />
         </div>
-
         <ToastAction />
-
-        {toastItem.actionProps ? (
-          <ToastClose
-            render={<Button variant="outline" size="sm" />}
-          >
-            Cancel
-          </ToastClose>
-        ) : (
-          <ToastClose />
-        )}
+        <ToastClose />
       </ToastContent>
     </Toast>
   ))
 }
-
-
-// function ToastList() {
-//   const { toasts } = ToastPrimitive.useToastManager()
-
-//   return toasts.map((toastItem) => (
-//     <Toast key={toastItem.id} toast={toastItem}>
-//       <ToastContent>
-//         <ToastIcon type={toastItem.type} />
-//         <div className="flex min-w-0 flex-1 flex-col gap-1">
-//           <ToastTitle />
-//           <ToastDescription />
-//         </div>
-//         <ToastAction />
-//         <ToastClose />
-//       </ToastContent>
-//     </Toast>
-//   ))
-// }
 
 function Toaster({
   children,
