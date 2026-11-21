@@ -4,7 +4,6 @@ import { AtSign, Clock, Globe, Hash, Mail, MapPin, Phone, Scissors } from "lucid
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Browse Services" },
-  { href: "/salon", label: "Salon Details" },
   { href: "/dashboard", label: "Dashboard" },
 ] as const
 
