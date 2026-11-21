@@ -52,7 +52,7 @@
 | Category | Technologies |
 |---|---|
 | Frontend | Next.js, React, TypeScript |
-| Styling | Tailwind CSS |
+| Styling | Tailwind CSS, Shadcn UI |
 | Authentication | Better Auth |
 | Backend | Node.js, Express.js |
 | Database | MongoDB |
