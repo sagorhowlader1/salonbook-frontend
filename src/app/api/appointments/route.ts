@@ -20,8 +20,11 @@ export async function POST(request: Request) {
       );
     }
 
-    // 2. Only customers can book appointments
-    if (session.user.role !== "customer") {
+    // 2. Only customers and admins can book appointments
+    if (
+      session.user.role !== "customer" &&
+      session.user.role !== "admin"
+    ) {
       return NextResponse.json(
         {
           success: false,
