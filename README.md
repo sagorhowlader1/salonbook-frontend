@@ -10,7 +10,7 @@
 
 <!-- Add your website homepage screenshot to public/images/salonbook-homepage.png -->
 
-![SalonBook Homepage](./public/salonbook.png)
+![SalonBook Homepage](./public/images/salonbook.png)
 
 ---
 
