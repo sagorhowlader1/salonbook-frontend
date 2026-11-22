@@ -20,6 +20,7 @@ import {
 } from "@/lib/api/appointment-api";
 
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/toast";
 
 export default function MyAppointmentsPage() {
   const router = useRouter()
@@ -64,13 +65,20 @@ export default function MyAppointmentsPage() {
 
       await cancelAppointment(id);
 
+      toast.add({
+        title: "Appointment Cancelled",
+        description: "Your appointment has been cancelled successfully.",
+      });
+
       await fetchAppointments();
     } catch (error) {
-      alert(
-        error instanceof Error
-          ? error.message
-          : "Failed to cancel appointment"
-      );
+      toast.add({
+        title: "Cancellation Failed",
+        description:
+          error instanceof Error
+            ? error.message
+            : "Failed to cancel appointment. Please try again.",
+      });
     } finally {
       setDeletingId(null);
     }
