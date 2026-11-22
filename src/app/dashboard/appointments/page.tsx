@@ -99,7 +99,7 @@ export default function MyAppointmentsPage() {
   }
 
   return (
-    <div className="space-y-6 container mx-auto mt-10">
+    <div className="container mx-auto mt-8 space-y-6 px-4 pb-8 sm:px-6 lg:px-8">
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
