@@ -54,7 +54,7 @@ export function ProfileDropdown() {
           </p>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuLinkItem render={<Link href="/dashboard" />} className="cursor-pointer">
+        <DropdownMenuLinkItem render={<Link href="/admin" />} className="cursor-pointer">
           <LayoutDashboard />
           Dashboard
         </DropdownMenuLinkItem>
