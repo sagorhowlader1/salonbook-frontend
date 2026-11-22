@@ -1,5 +1,3 @@
-
-
 "use client"
 
 import Image from "next/image"
@@ -256,16 +254,6 @@ export default function ManageServicesPage() {
                         <Trash2 />
                       )}
                     </Button>
-
-                    {/* <Button
-                      variant="ghost"
-                      size="icon-sm"
-                      aria-label={`Delete ${service.name}`}
-                      onClick={() => handleDelete(service)}
-                      className="rounded-full text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
-                    >
-                      <Trash2 />
-                    </Button> */}
                   </div>
                 </div>
               </div>

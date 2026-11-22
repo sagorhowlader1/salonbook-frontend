@@ -120,11 +120,8 @@ export function Footer() {
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 py-5 text-sm sm:flex-row">
           <p>© {Dete} SalonBook. All rights reserved.</p>
           <div className="flex items-center gap-5">
-            <Link href="/privacy" className="transition-colors hover:text-foreground">
+            <Link href="/privacy-policy" className="transition-colors hover:text-foreground">
               Privacy Policy
-            </Link>
-            <Link href="/terms" className="transition-colors hover:text-foreground">
-              Terms
             </Link>
           </div>
         </div>

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { toast } from "../ui/toast"
 import { authClient } from "@/lib/auth-client"
-import { redirect, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 
 
 export function SignInForm() {

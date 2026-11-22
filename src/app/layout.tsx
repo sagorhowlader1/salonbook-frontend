@@ -33,11 +33,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        {/* <Script
-          id="theme-init"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{ __html: themeInitScript }}
-        /> */}
         <ThemeProvider>
           <AuthProvider>
             <main className="flex-1">{children}</main>

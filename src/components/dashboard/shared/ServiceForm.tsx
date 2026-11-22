@@ -396,8 +396,6 @@ const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 
               {previewUrl ? (
                 <>
-                  {/* Blob previews can't go through next/image. */}
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={previewUrl}
                     alt="Service image preview"

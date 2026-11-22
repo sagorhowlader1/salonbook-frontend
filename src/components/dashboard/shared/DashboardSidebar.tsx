@@ -233,7 +233,6 @@ const DashboardSidebar = ({
     const activeRole: SidebarRole =  sessionRole === "admin" ? "admin" : "customer"
     const groups = navByRole[activeRole]
 
-   
     const initials = user
         ? user.name
             .split(" ")
@@ -337,7 +336,7 @@ const DashboardSidebar = ({
                             {group.items.map((item) => {
                                 const active = pathname === item.href
                                 const Icon = item.icon
-
+                                
                                 return (
                                     <Link
                                         key={item.href}

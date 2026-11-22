@@ -8,11 +8,7 @@ import { StateBlock } from "@/components/shared/state-block"
 
 const container = "mx-auto w-full max-w-3xl px-4 pt-20 pb-14 lg:pt-14"
 
-/**
- * Only admin accounts may see admin screens. While the session resolves it
- * shows a loading state, signed-out visitors get a sign-in action and
- * non-admin accounts are pointed back to their dashboard.
- */
+
 export function AdminGate({ children }: { children: ReactNode }) {
   const { user, isPending } = useAuth()
   const router = useRouter()
