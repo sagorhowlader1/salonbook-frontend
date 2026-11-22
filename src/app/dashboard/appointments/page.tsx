@@ -53,36 +53,30 @@ export default function MyAppointmentsPage() {
     fetchAppointments();
   }, [fetchAppointments]);
 
-  const handleCancel = async (id: string) => {
-    const confirmed = window.confirm(
-      "Are you sure you want to cancel this appointment?"
-    );
+ const handleCancel = async (id: string) => {
+  try {
+    setDeletingId(id);
 
-    if (!confirmed) return;
+    await cancelAppointment(id);
 
-    try {
-      setDeletingId(id);
+    toast.add({
+      title: "Appointment Cancelled",
+      description: "Your appointment has been cancelled successfully.",
+    });
 
-      await cancelAppointment(id);
-
-      toast.add({
-        title: "Appointment Cancelled",
-        description: "Your appointment has been cancelled successfully.",
-      });
-
-      await fetchAppointments();
-    } catch (error) {
-      toast.add({
-        title: "Cancellation Failed",
-        description:
-          error instanceof Error
-            ? error.message
-            : "Failed to cancel appointment. Please try again.",
-      });
-    } finally {
-      setDeletingId(null);
-    }
-  };
+    await fetchAppointments();
+  } catch (error) {
+    toast.add({
+      title: "Cancellation Failed",
+      description:
+        error instanceof Error
+          ? error.message
+          : "Failed to cancel appointment. Please try again.",
+    });
+  } finally {
+    setDeletingId(null);
+  }
+};
 
   if (loading) {
     return (
