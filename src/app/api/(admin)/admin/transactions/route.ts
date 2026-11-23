@@ -3,9 +3,10 @@ import { NextResponse, connection } from "next/server";
 import { getSession } from "@/lib/core/server";
 
 export async function GET() {
+  await connection();
   try {
-    await connection();
     
+
     // 1. Verify logged-in user
     const session = await getSession();
 

@@ -4,8 +4,9 @@ import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 
 export async function GET() {
+  await connection();
   try {
-    await connection();
+    
     // 1. Verify Better Auth session
     const session = await auth.api.getSession({
       headers: await headers(),
