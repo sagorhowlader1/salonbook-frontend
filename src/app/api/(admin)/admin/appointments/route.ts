@@ -4,6 +4,7 @@ import { getSession } from "@/lib/core/server";
 
 export async function GET() {
   await connection();
+  
   try {
 
     
