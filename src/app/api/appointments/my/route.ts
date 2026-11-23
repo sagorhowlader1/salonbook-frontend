@@ -1,10 +1,11 @@
 
-import { NextResponse } from "next/server";
+import { NextResponse, connection } from "next/server";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 
 export async function GET() {
   try {
+    await connection();
     // 1. Verify Better Auth session
     const session = await auth.api.getSession({
       headers: await headers(),
